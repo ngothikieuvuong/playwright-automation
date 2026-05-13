@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Playwright output
+playwright-report/
+test-results/
+screenshots/
+.features-gen/
+
+# Allure output
+allure-results/
+allure-report/
+
+# Archived reports (per-ticket folders + zips)
+reports/
+
+# Environment variables
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Ad-hoc debug scripts
+inspect-*.mjs
+
+# Old git history backup (before secret scrub) — delete manually after verifying
+.git.old-with-secrets-DELETE-ME/

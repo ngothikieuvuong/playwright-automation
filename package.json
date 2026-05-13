@@ -1,0 +1,32 @@
+{
+  "name": "playwright-automation",
+  "version": "1.0.0",
+  "description": "Playwright automation framework with Page Object Model",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --project=ui --project=ui-auth",
+    "test:ui:firefox": "BROWSERS=firefox playwright test --project=ui-firefox --project=ui-auth-firefox",
+    "test:ui:webkit": "BROWSERS=webkit playwright test --project=ui-webkit --project=ui-auth-webkit",
+    "test:ui:all": "BROWSERS=chromium,firefox,webkit playwright test --project=ui --project=ui-auth --project=ui-firefox --project=ui-auth-firefox --project=ui-webkit --project=ui-auth-webkit",
+    "test:api": "playwright test --project=api",
+    "test:spec": "playwright test --project=ui-spec",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui-mode": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "allure:serve": "allure serve allure-results",
+    "report:archive": "node scripts/archive-report.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.0",
+    "allure-commandline": "^2.38.1",
+    "allure-playwright": "^3.7.0",
+    "playwright-bdd": "^8.5.0"
+  },
+  "dependencies": {
+    "ws": "^8.20.1"
+  }
+}

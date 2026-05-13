@@ -1,0 +1,13 @@
+[
+  "Power_Usage",
+  "Power_RampRate_60s",
+  "Power_RampRate_120s",
+  "Local_Temp_Diff",
+  "Thermal_Hotspot_Factor",
+  "Power_Overshoot_60s",
+  "Power_Overlimit_Time_15m",
+  "Power_SteepJump_Count_5m",
+  "Min_Headroom_UpstreamBreaker_30s",
+  "Local_Temp_Diff_MAX(30m)",
+  "Thermal_Headroom_MIN(30m)"
+]

@@ -1,0 +1,52 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm test:*)",
+      "Bash(npx playwright:*)",
+      "Bash(npm run:*)",
+      "Bash(psql:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker-compose:*)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Read(./.env)",
+      "Read(./allure-results/**)",
+      "Read(./test-results/**)",
+      "Bash(mkdir -p /Users/vuongngo/Desktop/playwright-automation/.claude/commands)",
+      "mcp__jira__jira_get_issue",
+      "Bash(rm -f ~/.claude/session-handoff.md; echo \"cleared\")",
+      "mcp__jira__confluence_search",
+      "mcp__jira__confluence_get_page"
+    ],
+    "deny": [
+      "Bash(git push:*)",
+      "Bash(git push --force:*)",
+      "Write(./.env)",
+      "Edit(./.env)",
+      "Write(./.env.local)",
+      "Edit(./.env.local)"
+    ],
+    "defaultMode": "bypassPermissions",
+    "additionalDirectories": [
+      "/Users/vuongngo/Desktop/playwright-automation/.claude",
+      "/Users/vuongngo/.claude"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in *.env.example|*.env.sample) exit 0 ;; *.env|*.env.local|*.env.production|*.env.development|*.env.staging) echo 'Refuse: editing real .env / secret files is blocked by CLAUDE.md hard rules.' >&2; exit 2 ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}

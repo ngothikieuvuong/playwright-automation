@@ -1,0 +1,17 @@
+{
+  "admin": {
+    "email": "admin@example.com",
+    "password": "AdminPass123",
+    "role": "admin"
+  },
+  "standard": {
+    "email": "user@example.com",
+    "password": "UserPass123",
+    "role": "user"
+  },
+  "readonly": {
+    "email": "readonly@example.com",
+    "password": "ReadOnly123",
+    "role": "viewer"
+  }
+}
