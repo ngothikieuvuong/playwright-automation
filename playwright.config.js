@@ -1,4 +1,5 @@
 // @ts-check
+import 'dotenv/config';                                 // auto-load `.env` into process.env
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 import { BASE_URL, API_BASE_URL, TIMEOUT } from './shared/config/config.js';
@@ -76,6 +77,9 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
+  // Runs ONCE before any worker starts: BE pre-flight + auth warm-up.
+  // See shared/globalSetup.js. Skip with `SKIP_GLOBAL_SETUP=1` for fast iter.
+  globalSetup: process.env.SKIP_GLOBAL_SETUP ? undefined : './shared/globalSetup.js',
 
   reporter: [
     ['list'],
