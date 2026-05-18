@@ -18,6 +18,9 @@ reports/
 .env
 .env.local
 
+# Cached auth from globalSetup (regenerated per run)
+.auth/
+
 # macOS
 .DS_Store
 

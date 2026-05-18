@@ -1,4 +1,5 @@
 // @ts-check
+import 'dotenv/config';                                 // auto-load `.env` into process.env
 import { defineConfig, devices } from '@playwright/test';
 import { defineBddConfig } from 'playwright-bdd';
 import { BASE_URL, API_BASE_URL, TIMEOUT } from './shared/config/config.js';
@@ -72,10 +73,24 @@ const uiProjects = BROWSERS.flatMap((browser) => {
 export default defineConfig({
   timeout: TIMEOUT.TEST,
   expect:  { timeout: TIMEOUT.EXPECT },
-  fullyParallel: false,
+  // ── Parallel mode (demo branch) ─────────────────────────────────────────
+  // `main` keeps `fullyParallel:false` + `workers:1` because the dev BE has a
+  // race on org switch when multiple WS sessions race a SetOrg in the same
+  // tenant. On this branch we relax those constraints to show the framework
+  // scales when the BE is parallel-safe (typical prod-grade env):
+  //   * `fullyParallel: true`           → tests in the same file run in parallel
+  //   * `workers: '50%' on CI / undef'd → Playwright picks worker count
+  //                                       (≈ CPU/2 on CI, max-1 locally)
+  // To override at the CLI: `WORKERS=4 npm test`.
+  fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: 1,
+  workers: process.env.WORKERS
+    ? Number(process.env.WORKERS)
+    : (process.env.CI ? '50%' : undefined),
+  // Runs ONCE before any worker starts: BE pre-flight + auth warm-up.
+  // See shared/globalSetup.js. Skip with `SKIP_GLOBAL_SETUP=1` for fast iter.
+  globalSetup: process.env.SKIP_GLOBAL_SETUP ? undefined : './shared/globalSetup.js',
 
   reporter: [
     ['list'],
